@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+   myHost = "ws://localhost:8080"; //ip address + port del server 
+   //creo una websocket connessa al mio server sulla porta su cui ascolta    
+   var ws = new WebSocket(myHost);
+ 
+   //funzione associata al button
+   function sendMessage(){ 
+     ws.send(document.getElementById("data").value);  
+   }
+    
+   //cosa faccio quando ricevo un messaggio
+   ws.onmessage = function (evt) {
+       //document.getElementById("datoA").textContent = evt.data;
+       //
+       var splitted = evt.data.split(";");
+       document.getElementById("datoA").textContent = splitted[0];
+       document.getElementById("datoB").textContent = splitted[1];
+       document.getElementById("datoC").textContent = splitted[2];
+   };
+    
+</script>
+</head>
+
+<body>
+
+    <h1>Prova websocket</h1>
+    <hr align=”left” size=”1″ width=”300″ >
+    
+    <form>
+      Dato da inviare ai client:<br>
+      <input type="text" id="data"><br>
+    </form>    
+    <button type="button" onclick="sendMessage()">Invia</button>
+    <hr align=”left” size=”1″ width=”300″>
+    
+    <p id="datoA">Attendo l'ultimo dato inviato</p>
+    <p id="datoB">Attendo l'ultimo dato inviato</p>
+    <p id="datoC">Attendo l'ultimo dato inviato</p>
+
+</body>
+</html>
